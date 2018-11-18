@@ -29,4 +29,15 @@ class ShoppingCart extends Model
             return $product->savings * $product->pivot->quantity;
         })->sum();
     }
+
+    public function addProduct($product)
+    {
+        if ($attachedProduct = $this->products()->whereId($product->id)->first()) {
+            $this->products()->updateExistingPivot($product, ['quantity' => $attachedProduct->pivot->quantity + 1]);
+        } else {
+            $this->products()->attach($product);
+        }
+
+        return $this->fresh();
+    }
 }

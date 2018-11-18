@@ -3,6 +3,15 @@ type Query {
     products: [Product!]! @all
 }
 
+type Mutation {
+    addProductToShoppingCart(productId: ID!): ShoppingCartPayload!
+    deleteProductFromShoppingCart(productId: ID!): ShoppingCartPayload!
+}
+
+type ShoppingCartPayload {
+    shoppingCart: ShoppingCart!
+}
+
 type User {
     id: ID!
     name: String!
