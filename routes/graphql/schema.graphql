@@ -1,0 +1,34 @@
+type Query {
+    me: User! @auth
+    products: [Product!]! @all
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    shoppingCart: ShoppingCart @hasOne
+}
+
+type ShoppingCart {
+    id: ID!
+    total: Float!
+    totalBeforeSavings: Float!
+    savings: Float!
+    products: [ShoppingCartProduct!]! @belongsToMany
+}
+
+type ShoppingCartProduct {
+    id: ID!
+    name: String!
+    price: Float!
+    savings: Float!
+    quantity: Int!
+}
+
+type Product {
+    id: ID!
+    name: String!
+    price: Float!
+    savings: Float!
+}
