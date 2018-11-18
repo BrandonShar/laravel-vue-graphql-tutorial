@@ -18,5 +18,11 @@
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
         "vue": "^2.5.17"
+    },
+    "dependencies": {
+        "apollo-boost": "^0.1.21",
+        "graphql": "^14.0.2",
+        "graphql-anywhere": "^4.1.22",
+        "vue-apollo": "^3.0.0-beta.26"
     }
 }
