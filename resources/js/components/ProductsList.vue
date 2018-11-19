@@ -4,7 +4,7 @@
 
         <div class="row">
             <div class="col-6" v-for="product in products" :key="product.id">
-                <ProductButton v-bind="product" />
+                <ProductButton v-bind="filter($options.components.ProductButton.fragment, product)" />
             </div>
         </div>
        
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+    import gql from 'graphql-tag';
+    import {filter} from 'graphql-anywhere';
     import ProductButton from './ProductButton';
 
     export default {
@@ -21,6 +23,21 @@
 
         props: {
             products: Array,
-        }
+        },
+
+        methods: {
+            filter,
+        },
+
+        fragment: gql`
+            fragment ProductsList on Query {
+                products {
+                    id
+                    ...ProductButton
+                }
+            }
+
+            ${ProductButton.fragment}
+        `,
     }
 </script>

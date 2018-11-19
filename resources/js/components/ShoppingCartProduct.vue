@@ -8,6 +8,8 @@
 </template>
 
 <script>
+    import gql from 'graphql-tag';
+
     export default {
         props: {
             name: String,
@@ -15,6 +17,16 @@
             quantity: Number,
             price: Number,
             savings: Number,
-        }
+        },
+
+        fragment: gql`
+            fragment ShoppingCartProduct on ShoppingCartProduct {
+                id
+                name
+                quantity
+                savings
+                price
+            }
+        `,
     }
 </script>

@@ -3,8 +3,8 @@
         <template slot-scope="{result: {loading, data, error }}">
             <div v-if="loading">Loading...</div>
             <div v-else-if="data" class="row">
-                <ProductsList :products="data.products" class="col-sm-4" />
-                <ShoppingCart :shopping-cart="data.me.shoppingCart" class="col-sm-8" />
+                <ProductsList v-bind="filter($options.components.ProductsList.fragment, data)" class="col-sm-4" />
+                <ShoppingCart v-bind="filter($options.components.ShoppingCart.fragment, data.me)" class="col-sm-8" />
             </div>
         </template>
     </ApolloQuery>
@@ -12,6 +12,7 @@
 
 <script>
     import gql from 'graphql-tag';
+    import {filter} from 'graphql-anywhere';
     import ProductsList from './ProductsList';
     import ShoppingCart from './ShoppingCart';
 
@@ -21,31 +22,21 @@
             ShoppingCart,
         },
 
+        methods: {
+            filter,
+        },
+
         query: gql`
             query ShoppingCartPage {
                 me {
                     id
-                    shoppingCart {
-                        id
-                        total
-                        totalBeforeSavings
-                        savings
-                        products {
-                            id
-                            name
-                            price
-                            savings
-                            quantity
-                        }
-                    }
+                    ...ShoppingCart
                 }
-                products {
-                    id
-                    name
-                    price
-                    savings
-                }
+                ...ProductsList
             }
+
+            ${ShoppingCart.fragment}
+            ${ProductsList.fragment}
         `
     }
 </script>

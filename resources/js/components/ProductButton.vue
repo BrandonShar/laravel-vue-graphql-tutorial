@@ -1,10 +1,32 @@
-<template functional>
+<template>
     <button>
-        <h3>{{ props.name }}</h3>
-        <p class="price-label">Price: ${{ props.price }}</p>
-        <p>You save: ${{ props.savings }}</p>
+        <h3>{{ name }}</h3>
+        <p class="price-label">Price: ${{ price }}</p>
+        <p>You save: ${{ savings }}</p>
     </button>
 </template>
+
+<script>
+    import gql from 'graphql-tag';
+
+    export default {
+        props: {
+            id: String,
+            name: String,
+            price: Number,
+            savings: Number,
+        },
+
+        fragment: gql`
+            fragment ProductButton on Product {
+                id
+                name
+                price
+                savings
+            }
+        `,
+    }
+</script>
 
 <style scoped>
     button {
