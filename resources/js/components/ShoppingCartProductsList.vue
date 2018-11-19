@@ -7,6 +7,7 @@
                 <th class="text-right">Quantity</th>
                 <th class="text-right">Savings (per unit)</th>
                 <th class="text-right">Price (per unit)</th>
+                <th></th>
             </tr>
             <ShoppingCartProduct 
                 v-for="product in products" 

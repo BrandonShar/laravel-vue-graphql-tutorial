@@ -1,13 +1,17 @@
 <template>
-    <button>
-        <h3>{{ name }}</h3>
-        <p class="price-label">Price: ${{ price }}</p>
-        <p>You save: ${{ savings }}</p>
-    </button>
+    <ApolloMutation :mutation="$options.mutation" :variables="{productId: id}">
+        <button slot-scope="{mutate, loading}" :disabled="loading" @click="mutate()">
+            <h3>{{ name }}</h3>
+            <p class="price-label">Price: ${{ price }}</p>
+            <p>You save: ${{ savings }}</p>
+        </button>
+    </ApolloMutation>
 </template>
 
 <script>
     import gql from 'graphql-tag';
+    import ShoppingCartTotals from './ShoppingCartTotals';
+    import ShoppingCartProductsList from './ShoppingCartProductsList';
 
     export default {
         props: {
@@ -24,6 +28,21 @@
                 price
                 savings
             }
+        `,
+
+        mutation: gql`
+            mutation productButton($productId: ID!) {
+                addProductToShoppingCart(productId: $productId) {
+                    shoppingCart {
+                        id
+                        ...ShoppingCartProductsList
+                        ...ShoppingCartTotals
+                    }
+                }
+            }
+
+            ${ShoppingCartProductsList.fragment}
+            ${ShoppingCartTotals.fragment}
         `,
     }
 </script>

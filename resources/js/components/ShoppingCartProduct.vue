@@ -1,16 +1,22 @@
 <template>
     <tr>
         <td>{{ name }}</td>
-        <td class="text-right">{{ quantity.toFixed(2) }}</td>
+        <td class="text-right">{{ quantity }}</td>
         <td class="text-right">{{ savings.toFixed(2) }}</td>
         <td class="text-right">{{ price.toFixed(2) }}</td>
+        <td><DeleteProductButton :product-id="id" /></td>
     </tr>
 </template>
 
 <script>
     import gql from 'graphql-tag';
+    import DeleteProductButton from './DeleteProductButton';
 
     export default {
+        components: {
+            DeleteProductButton,
+        },
+
         props: {
             name: String,
             id: String,
